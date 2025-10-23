@@ -96,14 +96,19 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 // Example for TIM4
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-  TIM1->CCMR1 &= ~(TIM_CCMR1_OC1M);
-  TIM1->CCMR1 |= TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_0;
-  TIM1->BDTR |= TIM_BDTR_MOE;
-  uint32_t pwm_val = 300;
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 999-pwm_val);
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, pwm_val);
+HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+uint8_t duty_percent = 30; // 30%
+uint32_t compare_value = (duty_percent * 99) / 100; // 0–99
+__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, compare_value);
+__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 99 - compare_value);
+
+//  TIM1->CCMR1 &= ~(TIM_CCMR1_OC1M);
+//  TIM1->CCMR1 |= TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_0;
+//  TIM1->BDTR |= TIM_BDTR_MOE;
+//  uint32_t pwm_val = 300;
+//  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 999-pwm_val);
+//  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, pwm_val);
 
 //	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 	//TIM2->CCR4 = 500;
@@ -118,6 +123,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+   set_push_pull_duty(50);
+   HAL_Delay(1000);
 //	  if (direction)
 //	  {
 //		  brightness++;
@@ -369,4 +376,5 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
 
