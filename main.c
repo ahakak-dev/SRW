@@ -342,7 +342,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+if (percent > 100) percent = 100;
+    uint32_t val = (percent * 99) / 100;
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, val);       // PA0
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 99 - val);  // PA1
 /* USER CODE END 4 */
 
 /**
@@ -376,6 +379,7 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
 
 
 
