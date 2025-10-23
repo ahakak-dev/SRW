@@ -98,8 +98,8 @@ int main(void)
 // Example for TIM4
 HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-uint8_t duty_percent = 30; // 30%
-uint32_t compare_value = (duty_percent * 99) / 100; // 0–99
+uint8_t duty_percent = 30;
+uint32_t compare_value = (duty_percent * 99) / 100;
 __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, compare_value);
 __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 99 - compare_value);
 
@@ -376,5 +376,6 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
 
 
